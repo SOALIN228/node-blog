@@ -7,3 +7,12 @@
 3. 拆分路由，使结构更清晰
 4. 逻辑写在controller 中进行解耦，每个模块功能清晰
 5. 使用mysql 做数据库操作
+6. ```javascript
+    res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${getCookieExpires()}`)
+   ```
+   path设置为影响范围为全部路由
+   
+   httpOnly表示只能由服务端设置
+   
+   expires设置过期时间
+   

@@ -40,6 +40,17 @@ const serverHandle = (req, res) => {
   // 获取query
   req.query = querystring.parse(url.split('?')[1])
 
+  // 处理cookie
+  req.cookie = {}
+  const cookieStr = req.headers.cookie || ''
+  cookieStr.split(';').forEach(item => {
+    if (!item) return
+    const arr = item.split('=')
+    const key = arr[0].trim()
+    const value = arr[1]
+    req.cookie[key] = value
+  })
+
   // 处理post data
   getPostData(req).then(postData => {
     req.body = postData
