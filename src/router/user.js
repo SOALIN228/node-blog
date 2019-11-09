@@ -8,7 +8,6 @@ const getCookieExpires = () => {
   return d.toGMTString()
 }
 
-
 const handleUserRouter = (req, res) => {
   const method = req.method
 
@@ -21,7 +20,9 @@ const handleUserRouter = (req, res) => {
     const result = login(username, password)
     return result.then(data => {
       if (data.username) {
-        res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${getCookieExpires()}`)
+        // res.setHeader('Set-Cookie', `username=${data.username}; path=/; httpOnly; expires=${getCookieExpires()}`)
+        req.session.username = data.username
+        req.session.realname = data.realname
         return new SuccessModel()
       } else {
         return new ErrorModel('登录失败')
@@ -30,8 +31,8 @@ const handleUserRouter = (req, res) => {
   }
 
   if (method === 'GET' && req.path === '/api/user/login-test') {
-    if (req.cookie.username) {
-      return Promise.resolve(new SuccessModel())
+    if (req.session.username) {
+      return Promise.resolve(new SuccessModel({ session: req.session }))
     }
     return Promise.resolve(new ErrorModel('尚未登录'))
   }
