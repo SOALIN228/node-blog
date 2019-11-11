@@ -30,3 +30,62 @@
 
 9. 使用`nginx`做反向代理,前后端联调
 
+8. 文件I/O操作
+
+   ```js
+   const fs = require('fs')
+   const path = require('path')
+   
+   const fileName = path.resolve(__dirname, 'data.txt')
+   
+   // 读文件
+   fs.readFile(fileName, (err, data) => {
+     if (err) {
+       console.error(err)
+       return
+     }
+     console.log(data.toString())
+   })
+   
+   // 写文件
+   const content = 'asd\n'
+   const opt = {
+     flag: 'a' // 追加写入。覆盖为w
+   }
+   
+   fs.writeFile(fileName, content, opt, (err) => {
+     if (err) {
+       console.error(err)
+     }
+   })
+   
+   // 判断文件是否存在
+   fs.exists(fileName, exists => {
+     console.log(exists)
+   })
+   ```
+
+9. 普通I/O是一次全部读或全部写，非常吃硬件性能，还要考虑文件大小等问题，所以使用`Stream`可以很好的解决这个问题，`Stream`就像一根管子将要操作的两个事务进行连接，像水流一样进行数据的传输
+
+   ```js
+   const fs = require('fs')
+   const path = require('path')
+   
+   const fileName = path.resolve(__dirname, 'data.txt')
+   const fileName1 = path.resolve(__dirname, 'data-bak.txt')
+   
+   const readStream = fs.createReadStream(fileName)
+   const writeStream = fs.createWriteStream(fileName1)
+   
+   readStream.pipe(writeStream) // 读写连接，就是拷贝文件
+   
+   readStream.on('data', chunk => { // 流的方式进行copy
+     console.log(chunk.toString())
+   })
+   
+   readStream.on('end', () => {
+     console.log('end')
+   })
+   ```
+
+12. 将每次访问的记录写入日志中，利用脚本将每天的日志进行拆分，使用`readline` 对每行日志进行读取分析
