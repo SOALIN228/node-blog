@@ -1,19 +1,19 @@
-const express = require('express')
-const router = express.Router()
+const router = require('koa-router')()
 const { login } = require('../controller/user')
 const { SuccessModel, ErrorModel } = require('../model/resModel')
 
-router.post('/login', function (req, res, next) {
-  const { username, password } = req.body
-  const result = login(username, password)
-  return result.then(data => {
-    if (data.username) {
-      req.session.username = data.username
-      req.session.realname = data.realname
-      res.json(new SuccessModel())
-    }
-    res.json(new ErrorModel('登录失败'))
-  })
+router.prefix('/api/user')
+
+router.post('/login', async function (ctx, next) {
+  const { username, password } = ctx.request.body
+  const data = await login(username, password)
+  if (data.username) {
+    ctx.session.username = data.username
+    ctx.session.realname = data.realname
+    ctx.body = new SuccessModel()
+    return
+  }
+  ctx.body = new ErrorModel('登录失败')
 })
 
 module.exports = router

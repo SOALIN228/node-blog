@@ -1,3 +1,1 @@
-::ffff:127.0.0.1 - - [12/Nov/2019:06:56:39 +0000] "GET /api/blog/detail?id=6 HTTP/1.0" 304 - "http://localhost/edit.html?id=6" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
-::1 - - [12/Nov/2019:06:56:43 +0000] "POST /api/blog/update?id=6 HTTP/1.0" 200 11 "http://localhost/edit.html?id=6" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
-::ffff:127.0.0.1 - - [12/Nov/2019:06:56:45 +0000] "GET /api/blog/list?isadmin=1 HTTP/1.0" 200 200 "http://localhost/admin.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
+::1 - - [17/Nov/2019:05:35:03 +0000] "POST /api/user/login HTTP/1.0" 200 46 "http://localhost/login.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
