@@ -43,7 +43,7 @@ const getPostData = (req) => {
 
 const serverHandle = (req, res) => {
   // 记录access log
-  access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']} -- ${Date.now()}`)
+  console.log(`${req.method} -- ${req.url} -- ${req.headers['user-agent']}`)
 
   res.setHeader('Content-type', 'application/json')
 
