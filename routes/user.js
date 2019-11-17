@@ -11,6 +11,7 @@ router.post('/login', function (req, res, next) {
       req.session.username = data.username
       req.session.realname = data.realname
       res.json(new SuccessModel())
+      return
     }
     res.json(new ErrorModel('登录失败'))
   })
