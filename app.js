@@ -14,7 +14,7 @@ const getCookieExpires = () => {
 }
 
 const getPostData = (req) => {
-  const promise = new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
     if (req.method !== 'POST') { // 非POST 请求不处理
       resolve({})
       return
@@ -37,13 +37,11 @@ const getPostData = (req) => {
       resolve(JSON.parse(postData))
     })
   })
-
-  return promise
 }
 
 const serverHandle = (req, res) => {
   // 记录access log
-  console.log(`${req.method} -- ${req.url} -- ${req.headers['user-agent']}`)
+  access(`${req.method} -- ${req.url} -- ${req.headers['user-agent']}`)
 
   res.setHeader('Content-type', 'application/json')
 
@@ -61,8 +59,7 @@ const serverHandle = (req, res) => {
     if (!item) return
     const arr = item.split('=')
     const key = arr[0].trim()
-    const value = arr[1]
-    req.cookie[key] = value
+    req.cookie[key] = arr[1]
   })
 
   // 解析session
@@ -85,11 +82,14 @@ const serverHandle = (req, res) => {
   if (!userId) {
     needSetCookie = true
     userId = `${Date.now()}_${Math.random()}`
+    // 初始化 redis 中 session
     set(userId, {})
   }
+  // 获取 session
   req.sessionId = userId
   get(req.sessionId).then(sessionData => {
     if (sessionData === null) {
+      // 初始化 redis 中 session
       set(req.sessionId, {})
       req.session = {}
     } else {

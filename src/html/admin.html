@@ -20,7 +20,7 @@
         table th {
             text-align: left;
             background-color: #f1f1f1;
-        } 
+        }
         table td:nth-child(1) {
             width: 300px;
         }
@@ -88,7 +88,8 @@
         // 加载数据
         get(url).then(res => {
             if (res.errno !== 0) {
-                alert('数据错误')
+                alert(res.message)
+                location.href = '/login.html'
                 return
             }
 
