@@ -1,7 +1,7 @@
-var createError = require('http-errors')
-var express = require('express')
-var cookieParser = require('cookie-parser')
-var logger = require('morgan')
+const createError = require('http-errors')
+const express = require('express')
+const cookieParser = require('cookie-parser')
+const logger = require('morgan')
 const path = require('path')
 const fs = require('fs')
 const session = require('express-session')
@@ -10,8 +10,9 @@ const RedisStore = require('connect-redis')(session)
 const userRouter = require('./routes/user')
 const blogRouter = require('./routes/blog')
 
-var app = express()
+const app = express()
 
+// 日志
 const ENV = process.env.NODE_ENV
 if (ENV !== 'production') { // 开发环境日志打印在控制台
   app.use(logger('dev'))
@@ -24,6 +25,7 @@ if (ENV !== 'production') { // 开发环境日志打印在控制台
     stream: writeStream
   }))
 }
+
 app.use(express.json()) // 解析json 格式数据
 app.use(express.urlencoded({ extended: false })) // 解析非json 格式数据
 app.use(cookieParser()) // 解析cookie
@@ -34,15 +36,18 @@ const sessionStore = new RedisStore({
 })
 // 配置cookie 和session
 app.use(session({
+  resave: false,
+  saveUninitialized: true,
   secret: 'SoaNuo804z_@',
+  store: sessionStore,
   cookie: {
     path: '/',
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000
-  },
-  store: sessionStore
+  }
 }))
 
+// 路由
 app.use('/api/user', userRouter)
 app.use('/api/blog', blogRouter)
 

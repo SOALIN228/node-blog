@@ -35,7 +35,7 @@ npm install redis connect-redis
 ```js
 - bin // 启动目录
 - config // 配置
-	- db.js // 配置mysql 和redis
+  - db.js // 配置mysql 和redis
 - controller // 每层路由的逻辑，操作数据库
 - db // 操作数据库
 - logs // 存放日志
