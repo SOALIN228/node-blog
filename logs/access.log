@@ -1,1 +1,0 @@
-::1 - - [17/Nov/2019:05:35:03 +0000] "POST /api/user/login HTTP/1.0" 200 46 "http://localhost/login.html" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36"
